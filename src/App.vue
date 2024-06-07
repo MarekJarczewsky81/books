@@ -17,23 +17,25 @@
     </ul>
 
     <!-- no books message -->
-    <p v-show="!books.length">No books...</p>
-    <p v-if="books.length === 1">One book</p>
-    <p v-else-if="books.length > 1">Many books!</p>
-
+  <div>
+    Actually we'have:
+    <p v-if="books.length > 5">{{ books.length }} books</p>
+    <p v-else-if="books.length > 1 && books.length <= 5">Not too many of them...</p>
+    <p v-if="books.length === 1">One single book!</p>
+    <p v-if="books.length < 1">Go get some books!</p>
+  </div>
     <!-- add book form -->
-    <form>
+    <form @submit.prevent="handleSubmit">
       <label>
         Title:
-        <input type="text" name="title">
+        <input v-model="form.title" type="text" name="title">
       </label>
       <label>
         price:
-        <input type="number" name="price">
+        <input v-model="form.price" type="number" name="price">
       </label>
       <button>Add book</button>
     </form>
-
   </div>
 </template>
 
@@ -49,10 +51,19 @@ export default {
       {
         title: 'Of Mice and Men',
         price: 18
-      }
-    ]
+      }],
+    form: {
+      index: 0,
+      title: '',
+      price: 0
+    }
   }),
   methods: {
+    handleSubmit () {
+      this.books.push({ ...this.form })
+      this.form.title = ''
+      this.form.price = 0
+    },
     removeBook (index) {
       this.books.splice(index, 1)
     }
