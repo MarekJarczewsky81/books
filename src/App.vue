@@ -18,7 +18,7 @@
 
     <!-- no books message -->
   <div>
-    Actually we'have:
+    <p v-show="books.length">Actually we'have:</p>
     <p v-if="books.length > 5">{{ books.length }} books</p>
     <p v-else-if="books.length > 1 && books.length <= 5">Not too many of them...</p>
     <p v-if="books.length === 1">One single book!</p>
